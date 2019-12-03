@@ -369,7 +369,7 @@ class Command(object):
         schoices = '/'.join(schoices)
 
         p = '{0} ({1})? '.format(q.capitalize(), schoices)
-        while 1:
+        while True:
             val = input(p).lower()
             if val in choices:
                 return val

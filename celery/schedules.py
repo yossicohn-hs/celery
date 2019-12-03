@@ -519,7 +519,7 @@ class crontab(BaseSchedule):
                 datedata.moy = 0
         roll_over()
 
-        while 1:
+        while True:
             th = datetime(year=datedata.year,
                           month=months_of_year[datedata.moy],
                           day=days_of_month[datedata.dom])

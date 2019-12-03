@@ -46,7 +46,7 @@ class test_Proxy:
 
         assert x.__doc__ == 'real function'
 
-        assert x.__class__ == type(real)
+        assert isinstance(real, x.__class__)
         assert x.__dict__ == real.__dict__
         assert repr(x) == repr(real)
         assert x.__module__
@@ -262,10 +262,10 @@ class test_Proxy:
         assert x == 2
 
         x = Proxy(lambda: 10)
-        assert type(x.__float__()) == float
-        assert type(x.__int__()) == int
+        assert isinstance(x.__float__(), float)
+        assert isinstance(x.__int__(), int)
         if not PY3:
-            assert type(x.__long__()) == long_t
+            assert isinstance(x.__long__(), long_t)
         assert hex(x)
         assert oct(x)
 

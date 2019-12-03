@@ -245,7 +245,7 @@ class test_fun_takes_argument:
 ])
 def test_seq_concat_seq(a, b, expected):
     res = seq_concat_seq(a, b)
-    assert type(res) is type(expected)  # noqa
+    assert isinstance(res, type(expected))  # noqa
     assert res == expected
 
 
@@ -255,7 +255,7 @@ def test_seq_concat_seq(a, b, expected):
 ])
 def test_seq_concat_item(a, b, expected):
     res = seq_concat_item(a, b)
-    assert type(res) is type(expected)  # noqa
+    assert isinstance(res, type(expected))  # noqa
     assert res == expected
 
 

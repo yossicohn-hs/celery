@@ -50,7 +50,6 @@ class test_DynamoDBBackend:
             'celery.backends.dynamodb.DynamoDBBackend._get_or_create_table'
         with patch('boto3.client') as mock_boto_client, \
                 patch(table_creation_path):
-
             self.app.conf.dynamodb_endpoint_url = 'http://my.domain.com:666'
             backend = DynamoDBBackend(
                 app=self.app,
@@ -107,17 +106,17 @@ class test_DynamoDBBackend:
     @patch('celery.backends.dynamodb.DynamoDBBackend._validate_ttl_methods')
     @patch('celery.backends.dynamodb.DynamoDBBackend._set_table_ttl')
     def test_get_client_time_to_live_called(
-            self,
-            mock_set_table_ttl,
-            mock_validate_ttl_methods,
-            mock_get_or_create_table,
-            mock_boto_client,
+        self,
+        mock_set_table_ttl,
+        mock_validate_ttl_methods,
+        mock_get_or_create_table,
+        mock_boto_client,
     ):
         backend = DynamoDBBackend(
             app=self.app,
             url='dynamodb://key:secret@test?ttl_seconds=30'
         )
-        client = backend._get_client()
+        backend._get_client()
 
         mock_validate_ttl_methods.assert_called_once()
         mock_set_table_ttl.assert_called_once()
@@ -248,7 +247,7 @@ class test_DynamoDBBackend:
             }
         }
 
-        res = self.backend._set_table_ttl()
+        self.backend._set_table_ttl()
         mock_describe_time_to_live.assert_called_once_with(
             TableName=self.backend.table_name
         )
@@ -257,8 +256,7 @@ class test_DynamoDBBackend:
     def test_set_table_ttl_enable_when_enabled_with_correct_attr_succeeds(self):
         self.backend.time_to_live_seconds = 30
         self.backend._client = MagicMock()
-        mock_update_time_to_live = self.backend._client.update_time_to_live = \
-            MagicMock()
+        self.backend._client.update_time_to_live = MagicMock()
 
         mock_describe_time_to_live = \
             self.backend._client.describe_time_to_live = MagicMock()
@@ -344,8 +342,7 @@ class test_DynamoDBBackend:
     def test_set_table_ttl_disable_when_disabled_succeeds(self):
         self.backend.time_to_live_seconds = -1
         self.backend._client = MagicMock()
-        mock_update_time_to_live = self.backend._client.update_time_to_live = \
-            MagicMock()
+        self.backend._client.update_time_to_live = MagicMock()
         mock_describe_time_to_live = \
             self.backend._client.describe_time_to_live = MagicMock()
 

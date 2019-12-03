@@ -197,7 +197,7 @@ def _saferepr(o, maxlen=None, maxlevels=3, seen=None):
 
 def _reprseq(val, lit_start, lit_end, builtin_type, chainer):
     # type: (Sequence, _literal, _literal, Any, Any) -> Tuple[Any, ...]
-    if type(val) is builtin_type:  # noqa
+    if isinstance(val, builtin_type):  # noqa
         return lit_start, lit_end, chainer(val)
     return (
         _literal('%s(%s' % (type(val).__name__, lit_start.value), False, +1),

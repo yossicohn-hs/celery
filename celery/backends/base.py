@@ -542,7 +542,7 @@ class SyncBackendMixin(object):
 
         time_elapsed = 0.0
 
-        while 1:
+        while True:
             meta = self.get_task_meta(task_id)
             if meta['status'] in states.READY_STATES:
                 return meta

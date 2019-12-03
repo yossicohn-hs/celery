@@ -798,7 +798,7 @@ class Messagebuffer(Evictable):
 
     def __iter__(self):
         # type: () -> Iterable
-        while 1:
+        while True:
             try:
                 yield self._pop()
             except IndexError:

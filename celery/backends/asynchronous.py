@@ -48,7 +48,7 @@ class Drainer(object):
         wait = wait or self.result_consumer.drain_events
         time_start = monotonic()
 
-        while 1:
+        while True:
             # Total time spent may exceed a single call to wait()
             if timeout and monotonic() - time_start >= timeout:
                 raise socket.timeout()

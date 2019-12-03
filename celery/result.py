@@ -330,7 +330,7 @@ class AsyncResult(ResultBase):
         state, value, tb = (
             cache['status'], cache['result'], cache.get('traceback'))
         if state in states.PROPAGATE_STATES and propagate:
-            self.throw(value, self._to_remote_traceback(tb))
+            self.throw(value(self._to_remote_traceback(tb)))
         if callback is not None:
             callback(self.id, value)
         return value

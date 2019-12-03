@@ -35,7 +35,7 @@ __all__ = (
 
 #: List of base classes we probably don't want to reduce to.
 try:
-    unwanted_base_classes = (StandardError, Exception, BaseException, object)
+    unwanted_base_classes = (Exception, Exception, BaseException, object)
 except NameError:  # pragma: no cover
     unwanted_base_classes = (Exception, BaseException, object)  # py3k
 

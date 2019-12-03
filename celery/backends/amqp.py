@@ -207,7 +207,7 @@ class AMQPBackend(BaseBackend):
         consumer.callbacks[:] = [callback]
         time_start = now()
 
-        while 1:
+        while True:
             # Total time spent may exceed a single call to wait()
             if timeout and now() - time_start >= timeout:
                 raise socket.timeout()
@@ -228,7 +228,7 @@ class AMQPBackend(BaseBackend):
             binding = self._create_binding(task_id)
             with self.Consumer(channel, binding,
                                no_ack=no_ack, accept=self.accept) as consumer:
-                while 1:
+                while True:
                     try:
                         return wait(
                             conn, consumer, timeout, on_interval)[task_id]

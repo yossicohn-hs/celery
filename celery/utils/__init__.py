@@ -21,6 +21,7 @@ from .nodenames import nodename, nodesplit, worker_direct
 from .functional import memoize  # noqa: F401; noqa: F401
 
 __all__ = ('worker_direct', 'gen_task_name', 'nodename', 'nodesplit',
-           'cached_property', 'uuid')
+           'cached_property', 'uuid', 'get_cls_by_name', 'get_cls_by_name',
+           'memoize', 'LOG_LEVELS', 'chunks', 'noop')
 
 gen_unique_id = uuid

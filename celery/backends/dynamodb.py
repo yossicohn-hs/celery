@@ -288,7 +288,6 @@ class DynamoDBBackend(KeyValueStoreBackend):
             description = self._client.describe_time_to_live(
                 TableName=self.table_name
             )
-            status = description['TimeToLiveDescription']['TimeToLiveStatus']
         except ClientError as e:
             error_code = e.response['Error'].get('Code', 'Unknown')
             error_message = e.response['Error'].get('Message', 'Unknown')
@@ -317,13 +316,12 @@ class DynamoDBBackend(KeyValueStoreBackend):
                 if cur_attr_name == self._ttl_field.name:
                     # We want TTL enabled, and it is currently enabled or being
                     # enabled, and on the correct attribute.
+                    situation = 'already enabled' if status == 'ENABLED' else 'currently being enabled'
                     logger.debug((
                         'DynamoDB Time to Live is {situation} '
                         'on table {table}'
                     ).format(
-                        situation='already enabled' \
-                            if status == 'ENABLED' \
-                            else 'currently being enabled',
+                        situation=situation,
                         table=self.table_name
                     ))
                     return description
@@ -336,9 +334,9 @@ class DynamoDBBackend(KeyValueStoreBackend):
                     'DynamoDB Time to Live is {situation} '
                     'on table {table}'
                 ).format(
-                    situation='already disabled' \
-                        if status == 'DISABLED' \
-                        else 'currently being disabled',
+                    situation='already disabled'
+                    if status == 'DISABLED'
+                    else 'currently being disabled',
                     table=self.table_name
                 ))
                 return description
@@ -346,7 +344,7 @@ class DynamoDBBackend(KeyValueStoreBackend):
         # The state shouldn't ever have any value beyond the four handled
         # above, but to ease troubleshooting of potential future changes, emit
         # a log showing the unknown state.
-        else: # pragma: no cover
+        else:  # pragma: no cover
             logger.warning((
                 'Unknown DynamoDB Time to Live status {status} '
                 'on table {table}. Attempting to continue.'
