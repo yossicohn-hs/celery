@@ -885,8 +885,13 @@ class Task(object):
             )
 
         if self.request.chain:
+            options = sig.options.copy()
             for t in reversed(self.request.chain):
                 sig |= signature(t, app=self.app)
+            sig.set(
+                link=options['link'],
+                link_error=options['link_error']
+            )
 
         sig.set(
             chord=chord,
