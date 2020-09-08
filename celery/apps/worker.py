@@ -272,7 +272,7 @@ def _shutdown_handler(worker, sig='TERM', how='Warm',
             if current_process()._name == 'MainProcess':
                 if callback:
                     callback(worker)
-                safe_say('worker: {0} shutdown (MainProcess)'.format(how))
+                # safe_say('worker: {0} shutdown (MainProcess)'.format(how))
                 signals.worker_shutting_down.send(
                     sender=worker.hostname, sig=sig, how=how,
                     exitcode=exitcode,
